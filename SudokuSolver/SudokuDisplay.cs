@@ -130,11 +130,37 @@ namespace SudokuSolver
 
             tile.UpdateDataGrid(TileGridView);
 
+            int[] colForCell = SGrid.GetColumn(SudokuGridView.CurrentCell.ColumnIndex);
+            int[] rowForCell = SGrid.GetRow(SudokuGridView.CurrentCell.RowIndex);
+
+
         }
+
+        private void PopulateRowDataGridView(DataGridView myDGV)
+        {
+
+
+        }
+
+
+
 
         private void btnGetLowestValue_Click(object sender, EventArgs e)
         {
-            int lowestNum = tile.MinimumValidNumber();
+            int lowestNuminTile = tile.MinimumValidNumber();
+
+            txtLowestInTile.Text = lowestNuminTile.ToString();
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 
@@ -154,8 +180,7 @@ namespace SudokuSolver
                 myGrid[row, column] = value;
             }
         }
-
-
+        
         public SudokuGrid(int[,] InitialValues)
         {
             myGrid = InitialValues;
@@ -287,6 +312,41 @@ namespace SudokuSolver
 
 
             return TileAsArray;
+
+        }
+
+        public int[] GetStartingNumbers()
+        {
+            return new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        }
+
+
+        public int[] GetColumn(int column)
+        {
+
+            int[] col = new int [myGrid.GetUpperBound(1)];
+
+            for (int i = 0; i < myGrid.GetUpperBound(1); i++ )
+            {
+                col[i] = myGrid[i, column];
+            }
+
+            return col;
+            
+        }
+
+        public int[] GetRow(int row)
+        {
+
+            int[] r = new int[myGrid.GetUpperBound(1)];
+
+            for (int i = 0; i < myGrid.GetUpperBound(1); i++)
+            {
+                r[i] = myGrid[row, i];
+
+            }
+
+            return r;
 
         }
 
