@@ -25,18 +25,19 @@ namespace SudokuSolver
             int[,] s = new int[9, 9];
 
             //lets set up a grid with some values in 
-            s[0, 0] = 5;
-            s[0, 1] = 3;
-            s[0, 4] = 7;
-            s[1, 0] = 6;
-            s[1, 3] = 1;
-            s[1, 4] = 9;
-
+            s[0, 0] = 5; s[0, 1] = 3; s[0, 4] = 7;
+            s[1, 0] = 6; s[1, 3] = 1; s[1, 4] = 9; s[1, 5] = 5;
+            s[2, 1] = 9; s[2, 2] = 8; s[2, 7] = 6;
+            s[3, 0] = 8; s[3, 4] = 6; s[3, 8] = 3;
+            s[4, 0] = 4; s[4, 3] = 8; s[4, 5] = 3; s[4, 8] = 1;
+            s[5, 0] = 7; s[5, 4] = 2; s[5, 8] = 6;
+            s[6, 1] = 6; s[6, 6] = 2; s[6, 7] = 8;
+            s[7, 3] = 4; s[7, 4] = 1; s[7, 5] = 9; s[7, 8] = 5;
+            s[8, 4] = 8; s[8, 7] = 7; s[8, 8] = 9;
 
             SGrid = new SudokuGrid(s);
 
             txtLogDisplay.Text = SGrid.ToString();
-
             SGrid.UpdateDataGrid(SudokuGridView);
 
         }
@@ -111,15 +112,9 @@ namespace SudokuSolver
             {
                 FileToSave = "";
             }
-
             txtFileNameDisplay.Text = FileToSave;
-
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void btnGetTileForCell_Click(object sender, EventArgs e)
         {
@@ -133,17 +128,59 @@ namespace SudokuSolver
             int[] colForCell = SGrid.GetColumn(SudokuGridView.CurrentCell.ColumnIndex);
             int[] rowForCell = SGrid.GetRow(SudokuGridView.CurrentCell.RowIndex);
 
-
+            PopulateRowDataGridView(RowForSelectedCellDGV, rowForCell);
+            PopulateColDataGridView(ColForSelectedCellDGV, colForCell);
         }
 
-        private void PopulateRowDataGridView(DataGridView myDGV)
+        private void PopulateRowDataGridView(DataGridView myDGV, int[] rowData)
         {
 
+            var colCount = rowData.GetLength(0);
+            myDGV.Rows.Clear();
+            myDGV.ColumnCount = colCount;
 
+            var row = new DataGridViewRow();
+
+            for (int columnIndex = 0; columnIndex < colCount; ++columnIndex)
+            {
+                var tmp = "";
+                var cell = new DataGridViewTextBoxCell();
+
+                if (rowData[columnIndex] != 0)
+                {
+                    tmp = rowData[columnIndex].ToString();
+                }
+                else
+                {
+                    tmp = "";
+                }
+                cell.Value = tmp;
+                row.Cells.Add(cell);
+            }
+            myDGV.Rows.Add(row);
         }
 
+        private void PopulateColDataGridView(DataGridView myDGV, int[] colData)
+        {
 
+            myDGV.Rows.Clear();
+            myDGV.Columns.Clear();
+            myDGV.Columns.Add("RowData", "x");
+            string tmp; 
 
+            for (int i = 0; i < colData.Length; i++)
+            {
+                if (colData[i] > 0)
+                {
+                    tmp = colData[i].ToString();
+                }
+                else
+                {
+                    tmp = "";
+                }
+                myDGV.Rows.Add(new object[] { tmp });
+            }
+        }
 
         private void btnGetLowestValue_Click(object sender, EventArgs e)
         {
@@ -151,14 +188,20 @@ namespace SudokuSolver
 
             txtLowestInTile.Text = lowestNuminTile.ToString();
 
+            // check lowest value in Col
+
+
+
+            //check lowest value in Row
+
+
+            // look at the lowest value for all 3. 
+
+
+
         }
 
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
         {
 
         }
@@ -180,7 +223,7 @@ namespace SudokuSolver
                 myGrid[row, column] = value;
             }
         }
-        
+
         public SudokuGrid(int[,] InitialValues)
         {
             myGrid = InitialValues;
@@ -194,7 +237,6 @@ namespace SudokuSolver
                     PreSuppliedValue[rowCount, colCount] = InitialValues[rowCount, colCount] > 0;
                 }
             }
-
         }
 
         public override string ToString()
@@ -258,7 +300,7 @@ namespace SudokuSolver
             FileStream stream = File.Create(FileName);
             var formatter = new BinaryFormatter();
 
-            formatter.Serialize(stream, myGrid);
+            formatter.Serialize(stream,  myGrid);
             stream.Close();
         }
 
@@ -324,15 +366,15 @@ namespace SudokuSolver
         public int[] GetColumn(int column)
         {
 
-            int[] col = new int [myGrid.GetUpperBound(1)];
+            int[] col = new int[myGrid.GetUpperBound(1)];
 
-            for (int i = 0; i < myGrid.GetUpperBound(1); i++ )
+            for (int i = 0; i < myGrid.GetUpperBound(1); i++)
             {
                 col[i] = myGrid[i, column];
             }
 
             return col;
-            
+
         }
 
         public int[] GetRow(int row)

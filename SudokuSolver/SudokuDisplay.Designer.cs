@@ -44,7 +44,7 @@
             this.TileGridView = new System.Windows.Forms.DataGridView();
             this.txtLowestInTile = new System.Windows.Forms.TextBox();
             this.btnGetLowestValues = new System.Windows.Forms.Button();
-            this.ColumnForCellDGV = new System.Windows.Forms.DataGridView();
+            this.ColForSelectedCellDGV = new System.Windows.Forms.DataGridView();
             this.lblColForSelectedCell = new System.Windows.Forms.Label();
             this.RowForSelectedCellDGV = new System.Windows.Forms.DataGridView();
             this.lblRowForSelectedCell = new System.Windows.Forms.Label();
@@ -58,7 +58,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.SudokuGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreSuppliedGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TileGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ColumnForCellDGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ColForSelectedCellDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RowForSelectedCellDGV)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,7 +75,7 @@
             this.SudokuGridView.Name = "SudokuGridView";
             this.SudokuGridView.RowHeadersVisible = false;
             this.SudokuGridView.RowHeadersWidth = 18;
-            this.SudokuGridView.Size = new System.Drawing.Size(272, 251);
+            this.SudokuGridView.Size = new System.Drawing.Size(236, 233);
             this.SudokuGridView.TabIndex = 0;
             this.SudokuGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.SudokuGridView_CellValueChanged);
             // 
@@ -125,6 +125,7 @@
             this.btnSave.TabIndex = 5;
             this.btnSave.Text = "Save...";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnSaveAs
             // 
@@ -205,21 +206,21 @@
             this.btnGetLowestValues.UseVisualStyleBackColor = true;
             this.btnGetLowestValues.Click += new System.EventHandler(this.btnGetLowestValue_Click);
             // 
-            // ColumnForCellDGV
+            // ColForSelectedCellDGV
             // 
-            this.ColumnForCellDGV.AllowUserToAddRows = false;
-            this.ColumnForCellDGV.AllowUserToDeleteRows = false;
-            this.ColumnForCellDGV.AllowUserToResizeRows = false;
-            this.ColumnForCellDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
-            this.ColumnForCellDGV.BackgroundColor = System.Drawing.Color.Beige;
-            this.ColumnForCellDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ColumnForCellDGV.ColumnHeadersVisible = false;
-            this.ColumnForCellDGV.Location = new System.Drawing.Point(322, 40);
-            this.ColumnForCellDGV.Name = "ColumnForCellDGV";
-            this.ColumnForCellDGV.RowHeadersVisible = false;
-            this.ColumnForCellDGV.RowHeadersWidth = 18;
-            this.ColumnForCellDGV.Size = new System.Drawing.Size(33, 191);
-            this.ColumnForCellDGV.TabIndex = 16;
+            this.ColForSelectedCellDGV.AllowUserToAddRows = false;
+            this.ColForSelectedCellDGV.AllowUserToDeleteRows = false;
+            this.ColForSelectedCellDGV.AllowUserToResizeRows = false;
+            this.ColForSelectedCellDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
+            this.ColForSelectedCellDGV.BackgroundColor = System.Drawing.Color.Beige;
+            this.ColForSelectedCellDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ColForSelectedCellDGV.ColumnHeadersVisible = false;
+            this.ColForSelectedCellDGV.Location = new System.Drawing.Point(290, 40);
+            this.ColForSelectedCellDGV.Name = "ColForSelectedCellDGV";
+            this.ColForSelectedCellDGV.RowHeadersVisible = false;
+            this.ColForSelectedCellDGV.RowHeadersWidth = 18;
+            this.ColForSelectedCellDGV.Size = new System.Drawing.Size(65, 191);
+            this.ColForSelectedCellDGV.TabIndex = 16;
             // 
             // lblColForSelectedCell
             // 
@@ -304,7 +305,6 @@
             this.label4.Size = new System.Drawing.Size(106, 13);
             this.label4.TabIndex = 26;
             this.label4.Text = "Lowest Value for Cell";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // txtLowestValForCell
             // 
@@ -312,7 +312,6 @@
             this.txtLowestValForCell.Name = "txtLowestValForCell";
             this.txtLowestValForCell.Size = new System.Drawing.Size(28, 20);
             this.txtLowestValForCell.TabIndex = 25;
-            this.txtLowestValForCell.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // SudokuDisplay
             // 
@@ -329,7 +328,7 @@
             this.Controls.Add(this.lblRowForSelectedCell);
             this.Controls.Add(this.RowForSelectedCellDGV);
             this.Controls.Add(this.lblColForSelectedCell);
-            this.Controls.Add(this.ColumnForCellDGV);
+            this.Controls.Add(this.ColForSelectedCellDGV);
             this.Controls.Add(this.btnGetLowestValues);
             this.Controls.Add(this.txtLowestInTile);
             this.Controls.Add(this.TileGridView);
@@ -349,7 +348,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.SudokuGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreSuppliedGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TileGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ColumnForCellDGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ColForSelectedCellDGV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.RowForSelectedCellDGV)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -374,7 +373,7 @@
         private System.Windows.Forms.DataGridView TileGridView;
         private System.Windows.Forms.TextBox txtLowestInTile;
         private System.Windows.Forms.Button btnGetLowestValues;
-        private System.Windows.Forms.DataGridView ColumnForCellDGV;
+        private System.Windows.Forms.DataGridView ColForSelectedCellDGV;
         private System.Windows.Forms.Label lblColForSelectedCell;
         private System.Windows.Forms.DataGridView RowForSelectedCellDGV;
         private System.Windows.Forms.Label lblRowForSelectedCell;
