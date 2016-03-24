@@ -166,7 +166,7 @@ namespace SudokuSolver
             myDGV.Rows.Clear();
             myDGV.Columns.Clear();
             myDGV.Columns.Add("RowData", "x");
-            string tmp; 
+            string tmp;
 
             for (int i = 0; i < colData.Length; i++)
             {
@@ -184,19 +184,30 @@ namespace SudokuSolver
 
         private void btnGetLowestValue_Click(object sender, EventArgs e)
         {
-            int lowestNuminTile = tile.MinimumValidNumber();
+            
+            var myTile = SGrid.GetTileForCell(SudokuGridView.CurrentCell.RowIndex, SudokuGridView.CurrentCell.ColumnIndex);
 
-            txtLowestInTile.Text = lowestNuminTile.ToString();
+            int lowestNumInTile = myTile.MinimumValidNumber();
+            
+
+            txtLowestInTile.Text = lowestNumInTile.ToString();
 
             // check lowest value in Col
-
+            int[] colForCell = SGrid.GetColumn(SudokuGridView.CurrentCell.ColumnIndex);
+            int lowestValInCol = SGrid.GetLowestValueForCol(colForCell);
+            txtLowestValForCol.Text = lowestValInCol.ToString();
 
 
             //check lowest value in Row
+            int[] rowForCell = SGrid.GetColumn(SudokuGridView.CurrentCell.RowIndex);
+            int lowestValInRow = SGrid.GetLowestValueForArray(rowForCell);
+            txtLowestValueInRow.Text = lowestValInRow.ToString();
 
+            
 
             // look at the lowest value for all 3. 
 
+            txtLowestValForCell.Text = SGrid.GetLowestValueForCell(SudokuGridView.CurrentCell.RowIndex, SudokuGridView.CurrentCell.ColumnIndex).ToString();
 
 
         }
@@ -300,7 +311,7 @@ namespace SudokuSolver
             FileStream stream = File.Create(FileName);
             var formatter = new BinaryFormatter();
 
-            formatter.Serialize(stream,  myGrid);
+            formatter.Serialize(stream, myGrid);
             stream.Close();
         }
 
@@ -385,11 +396,87 @@ namespace SudokuSolver
             for (int i = 0; i < myGrid.GetUpperBound(1); i++)
             {
                 r[i] = myGrid[row, i];
-
             }
 
             return r;
+        }
 
+        public int GetLowestValueForRow(int[] row)
+        {
+            List<int> myList = new List<int>();
+            int[,] myArray;
+
+            myList.AddRange(GetStartingNumbers());
+
+            for (int i = 0; i < row.GetLength(0); i++)
+            {
+                    if (row[i] != 0)
+                    {
+                        myList.Remove(row[i]);
+                    }
+            }
+
+            return myList.Min();
+        }
+
+
+        public int GetLowestValueForArray(int[] array)
+        {
+            List<int> myList = new List<int>();
+            int[,] myArray;
+
+            myList.AddRange(GetStartingNumbers());
+
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                if (array[i] != 0)
+                {
+                    myList.Remove(array[i]);
+                }
+            }
+
+            return myList.Min();
+        }
+
+
+
+        public int GetLowestValueForCol(int[] col)
+        {
+            // I know I could 
+
+            List<int> myList = new List<int>();
+            int[,] myArray;
+
+            myList.AddRange(GetStartingNumbers());
+
+            for (int i = 0; i < col.GetLength(0); i++)
+            {
+                if (col[i] != 0)
+                {
+                    myList.Remove(col[i]);
+                }
+            }
+
+            return myList.Min();
+        }
+
+        public int GetLowestValueForCell(int row, int col)
+        {
+            var myTile = GetTileForCell(row, col);
+
+            int lowestNumInTile = myTile.MinimumValidNumber();
+            int lowestValInCol = GetLowestValueForCol(GetColumn(col));
+            int lowestValInRow = GetLowestValueForArray(GetRow(row));
+
+            List<int> myList = new List<int>();
+
+            myList.Add(lowestNumInTile);
+            myList.Add(lowestValInCol);
+            myList.Add(lowestValInRow);
+
+            return myList.Max();
+
+            
         }
 
     }
