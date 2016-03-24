@@ -77,6 +77,7 @@
             this.SudokuGridView.RowHeadersWidth = 18;
             this.SudokuGridView.Size = new System.Drawing.Size(236, 233);
             this.SudokuGridView.TabIndex = 0;
+            this.SudokuGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SudokuGridView_CellClick);
             this.SudokuGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.SudokuGridView_CellValueChanged);
             // 
             // txtLogDisplay

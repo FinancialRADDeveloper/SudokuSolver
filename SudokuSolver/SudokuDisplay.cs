@@ -18,6 +18,9 @@ namespace SudokuSolver
         SudokuGrid SGrid;
         Tile tile;
 
+        private List<int> dividers = new List<int>() { 2, 5 };
+        private int pad = 2;
+
         public SudokuDisplay()
         {
             InitializeComponent();
@@ -39,6 +42,7 @@ namespace SudokuSolver
 
             txtLogDisplay.Text = SGrid.ToString();
             SGrid.UpdateDataGrid(SudokuGridView);
+            InitializeDataGridView(SudokuGridView);
 
         }
 
@@ -216,6 +220,45 @@ namespace SudokuSolver
         {
 
         }
+
+        private void SudokuGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            String CellValue = SudokuGridView.SelectedCells[0].Value.ToString();
+            
+            btnGetLowestValues.Enabled = (CellValue == "");
+
+        }
+
+
+        private void InitializeDataGridView(DataGridView myDGV)
+        {
+            myDGV.AllowUserToAddRows = false;
+
+            for (int i = 0; i < 9; i++)
+            {
+                DataGridViewTextBoxColumn column = new DataGridViewTextBoxColumn();
+                //column.HeaderText = "c" + (i + 1);
+                column.Width = 5 + (dividers.Contains(i) ? pad : 0);
+                //myDGV.Columns.Add(column);
+            }
+
+            for (int i = 0; i < 9; i++)
+            {
+                DataGridViewRow row = new DataGridViewRow();
+                //row.CreateCells(myDGV);
+                row.Height = row.Height + (dividers.Contains(i) ? pad : 0);
+                //myDGV.Rows.Add(row);
+
+
+            }
+
+            foreach (int div in dividers)
+            {
+                myDGV.Columns[div].DividerWidth = pad;
+                myDGV.Rows[div].DividerHeight = pad;
+            }
+        }
+
     }
 
     public class SudokuGrid
